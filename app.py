@@ -1,6 +1,7 @@
 import streamlit as st
 from utils.file_loader import load_files
-from utils.prompt import generate_report_prompt, followup_question_prompt
+from utils.prompt import generate_report_prompt
+from utils.prompt import followup_question_prompt
 from agent.report_agent import create_report_agent
 
 st.set_page_config(page_title="업무보고서 생성기", layout="wide")

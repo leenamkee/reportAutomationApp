@@ -1,6 +1,6 @@
 import streamlit as st
 from utils.file_loader import load_files
-from utils.prompt import generate_report_prompt
+from utils.prompt import generate_report_prompt, followup_question_prompt
 from agent.report_agent import create_report_agent
 
 st.set_page_config(page_title="업무보고서 생성기", layout="wide")
@@ -30,16 +30,18 @@ if "report" in st.session_state:
     st.subheader("📝 생성된 업무보고서")
     st.text_area("초안", value=st.session_state["report"], height=400)
 
-    followup_prompt = f"""
-    다음 보고서를 기반으로, 
-    1. 사용자가 AI에게 추가로 요청할 수 있는 질문 예시 2~3가지
-    2. 이 보고서의 완성도를 높이기 위해 필요한 정보나 자료 2~3가지
+    followup_prompt = followup_question_prompt(st.session_state['report'])
 
-    를 각각 제안해 주세요.
+    # followup_prompt = f"""
+    # 다음 보고서를 기반으로, 
+    # 1. 사용자가 AI에게 추가로 요청할 수 있는 질문 예시 2~3가지
+    # 2. 이 보고서의 완성도를 높이기 위해 필요한 정보나 자료 2~3가지
 
-    보고서:
-    {st.session_state['report']}
-    """
+    # 를 각각 제안해 주세요.
+
+    # 보고서:
+    # {st.session_state['report']}
+    # """
 
     result = st.session_state["agent"].invoke({"input": followup_prompt})
     st.session_state["ai_suggestions"] = result.content

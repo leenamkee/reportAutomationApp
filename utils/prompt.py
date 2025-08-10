@@ -25,3 +25,18 @@ def generate_report_prompt(context: str, guide: str) -> str:
 위 내용을 기반으로 전체 보고서를 작성해 주세요.
 """
     return prompt
+
+def followup_question_prompt(report: str) -> str:
+    prompt = f"""
+다음 보고서를 기반으로, 
+1. 사용자가 AI에게 추가로 요청할 수 있는 질문 예시 2~3가지
+2. 이 보고서의 완성도를 높이기 위해 필요한 정보나 자료 2~3가지
+
+를 각각 제안해 주세요.
+
+보고서:
+{report}
+
+"""
+    return prompt
+    
